@@ -1,8 +1,5 @@
+require File.join(File.dirname(__FILE__), %w(.. lib tegu_gears))
 require 'spec'
-
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-
-require 'tegu_gears'
 
 Spec::Runner.configure do |config|
   

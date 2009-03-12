@@ -1,5 +1,27 @@
-tegu_gears==========
-Description goes here.
+== Tegu Gears
+
+Tegu Gears is:
+
+* Composable methods
+* Concurrent code
+* Distributed processing
+
+An example is:
+
+
+== Dependencies
+
+Tegu Gears uses Fiber, which is a Ruby 1.9 feature.  It can be patched back into Ruby 1.8.6 and Ruby 1.8.7.  The instructions for this are found here: http://timetobleed.com/fibers-implemented-for-ruby-1867/
+
+Tegu Gears also uses Starling for its distribution.  It is simpler to use Starling than some other distributed models.  Starling depends on Mecached, which also needs to be loaded on your computer.
+
+There are optional dependencies if you have the libraries available:
+
+* RBTree
+* NArray
+* TenaciousG
+* Statisticus
+* About any Tegu-related gems
 
 COPYRIGHT
 =========
