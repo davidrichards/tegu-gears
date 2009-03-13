@@ -1,19 +1,82 @@
 == Tegu Gears
 
+== TODO
+
+* Prove composition
+* Prove concurrency
+* Prove observed concurrency
+* Prove distributed
+* Prove TeguGears methods (pool, spawn, spawn_link, etc.)
+* Write up examples
+* tegu_gears.god
+* lib_loader
+* other libraries passively included (some of sirb)
+* console app
+* is_alive, nodes, node, monitor_node, disconnect_node, keep_alive (???)
+
 Tegu Gears is:
 
 * Composable methods
 * Concurrent code
 * Distributed processing
 
+This is important because:
+
+* It allows us to reuse a lot of code
+* It let's us scale out instead of up
+* It makes an object-oriented language more useful in a functional style
+* It takes advantage of modern chip architectures
+* It takes advantage of cloud computing
+
+Object-oriented code was invented to make code cleaner and easier to re-use.  But, with algorithmic work, a lot of the reuse gets lost in the encapsulation.  For instance, most clustering algorithms need to iterate the points, create centroids, converge, assign points to a centroid, and measure distance.  They may have a little different approach for setting up centroids, filtering through points to cluster, or iterating the points.  But, there's a lot of reuse there.  Now, if I'm careful, I can reuse a lot of the codes with modules and very specific (one or two line) methods.  However, this is hard to do, and sometimes makes a lot of extra work and slower processing.  
+
+Another way to do it is use the patterns found in mathematics to break down the code.  This is a little more difficult with standard Ruby, but doable.  What Tegu Gears adds is a unified way to encapsulate function segments and combine them in useful ways.  In other words, we need to have something that works like a block that also:
+
+* keeps local state
+* can be computed lazily, or it can be started and stopped as needed
+* doesn't confuse instantiation context with run-time context
+* can be parallelized
+
+Fibers are the answer to this kind of problem.  They are coroutines that can be run in a low-overhead thread, can be stepped through, and have a lot of other neat properties.  So, a text analyzer can tokenize words, then create lexemes out of the tokens, then order the lexemes, then combine lexemes for a document.  Documents can then be compared on several levels.  Each step can be reused in other algorithms.  For instance, sometimes location-specific lexemes are very useful.  Sometimes vectors based on person profiles are useful as well.  A lot of the same process can be reused this way.  If a solution is found part-way through a computation, it can be stopped fairly efficiently.
+
+One very important aspect of Fibers are their concurrent nature: they are intended to be run concurrently.  NeverBlock is a gem written to manage pools of fibers, especially for overcoming IO bottlenecks.  I've extended the FiberPool of NeverBlock to message back work results as they happen, kind of a watered-down observer pattern.  This works well for overcoming some computational bottlenecks and still having access to the right information.
+
+Now, working this way is certainly a learned behavior.  I'm still experimenting after a couple of years with these ideas and I haven't necessarily found the golden ratio of algorithmic composition.  As I apply Tegu Gears to more and more algorithms, I'll extend it to handle these cases.  The most efficient way to gain from my experiences is to find the Tegu Ontology (when it's made public on teguhub.com) and search it for ready-to-use solutions for your problem.  If that fails, I'll collect composition patterns and publish them somewhere, probably on blog.teguhub.com.  
+
+Distributed computing is another important topic: the ability to work in a cloud.  There are many parts to this puzzle.  The key part is messaging and queueing.  I decided to use Starling for this.  It was written by the folks at Twitter, and it rests on the Memcached protocol.  It doesn't have all the bells and whistles of other messaging systems, but its main contribution is its simplicity.  
+
+Distributing code computation in the cloud is almost the same as running code concurrently on a single machine.  Instead of spawning the method, queue it (queue {some block}).  The results will be sent to the result queue.  
+
+... More description ...
+
+
 An example is:
 
+...Get these from the examples directory
 
 == Dependencies
 
 Tegu Gears uses Fiber, which is a Ruby 1.9 feature.  It can be patched back into Ruby 1.8.6 and Ruby 1.8.7.  The instructions for this are found here: http://timetobleed.com/fibers-implemented-for-ruby-1867/
 
-Tegu Gears also uses Starling for its distribution.  It is simpler to use Starling than some other distributed models.  Starling depends on Mecached, which also needs to be loaded on your computer.
+Tegu Gears also uses Starling for its distribution.  It is simpler to use Starling than some other distributed models.  Starling depends on Mecached, which also needs to be loaded on your computer.  To install Starling:
+
+  sudo gem install starling
+  sudo gem install memcache-client
+
+Also, NeverBlock is used to manage the Fibers.  It adds a few important features to our concurrent model:
+
+* setters and getters of fiber local variables
+* nil returned when a fiber local variable is undefined
+* a pool of fibers that is managed by NeverBlock
+* a queue of requests when the whole pool is busy
+
+
+There were a few things that needed to be added to NeverBlock for TeguGears to play more flexibly:
+
+* A flexible fiber pool size for process optimization
+* link and spawn_link for monitoring fiber performance
+
+queue when the fibers are overloaded and has tools for integrating with various repositories and resources: ActiveRecord and 
 
 There are optional dependencies if you have the libraries available:
 
