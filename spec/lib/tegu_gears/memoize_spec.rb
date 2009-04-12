@@ -54,22 +54,23 @@ describe Memoize do
       @a.call(:anything).should eql('found me')
     end
     
-    it "should stuff a memoized value into cache" do
-      @a.call(2)
-      @a.cache[2].should eql(4)
-    end
-    
     it "should not refer to the cache when memoize is set to false" do
       @a.memoize = false
-      @a.should_not_receive(:memoized)
-      @a.should_not_receive(:cache)
+      MemoRepository.should_not_receive(:for)
       @a.call(2)
     end
     
     it "should be able to clear the cache" do
       @a.call(2)
       @a.flush
-      @a.cache.should be_empty
+      MemoRepository.for(@a).should be_empty
+    end
+    
+    it "should use the MemoRepository" do
+      MemoRepository.flush_for(A)
+      MemoRepository.for(@a)[2].should be_nil
+      @a.call(2)
+      MemoRepository.for(@a)[2].should eql(4)
     end
   end
   

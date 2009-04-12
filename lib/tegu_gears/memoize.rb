@@ -33,16 +33,13 @@ module TeguGears #:nodoc:
       end
 
       def memoized(x)
-        cache[x] || cache[x] = process(x)
+        MemoRepository.for(self, x) || MemoRepository.set(self, x, process(x))
       end
 
       def flush
-        @cache = {}
+        MemoRepository.flush_for(self)
       end
 
-      def cache
-        @cache ||= {}
-      end
     end
 
     def self.included(base)
