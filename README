@@ -9,7 +9,13 @@ There is a need (at least for me) to have code that is:
 * Memoized
 * Documented
 
-This is a step in that direction.  I have come up with some fairly interesting approaches for these libraries, I trust they may save you some time and effort as well.
+This is a step in that direction.  I have come up with some fairly interesting approaches for these libraries, I trust they may save you some time and effort as well.  I am re-building this gem from scratch, removing some cruft.  So, please be a little patient if you are expecting some other features.  They still exist, I just need to bring them more carefully into the gem from a saved version of the old gem.  
+
+Also, the features directory will have the best documentation for a while.  Just run:
+
+  cucumber -n features/<feature_name>
+
+This will give you a Cucumber output that reads fairly well.  You'll, of course, need Cucumber installed to check this out.  (sudo gem install cucumber should do the trick.)
 
 ==Usage
 
