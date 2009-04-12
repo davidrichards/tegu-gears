@@ -1,8 +1,10 @@
-require File.join(File.dirname(__FILE__), %w(.. lib tegu_gears))
-require 'spec'
-
-include TeguGears
+$: << File.join(File.dirname(__FILE__), "/../lib") 
+require 'rubygems' 
+require 'spec' 
+require 'tegu_gears'
 
 Spec::Runner.configure do |config|
   
 end
+
+include TeguGears
