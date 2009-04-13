@@ -4,6 +4,7 @@ module TeguGears
   module ClassMethods; end
 end
 
+require 'tegu_gears/memoize'
 Dir.glob("#{File.dirname(__FILE__)}/tegu_gears/*.rb").each { |file| require file }
 module TeguGears
   def self.included(base)
