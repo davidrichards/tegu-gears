@@ -73,7 +73,7 @@ describe Memoize do
       MemoRepository.for(@a)[2].should eql(4)
     end
   end
-  
+
   after(:all) do
     Object.send(:remove_const, :A)
   end

@@ -39,9 +39,16 @@ module TeguGears #:nodoc:
     
     # Expects a hash on the other end, for now.
     def set(caller, key, value)
+      key = simplify_key(key)
       self.store[caller] ||= REPOSITORY_CLASS.new
       self.store[caller][key] = value
     end
+    
+    # Because I opened things up to accept an array of params instead of a single param.
+    def simplify_key(key)
+      (key.is_a?(Array) and key.size == 1) ? key.first : key
+    end
+    protected :simplify_key
     
     def for(caller, key=nil)
       self.store[caller] ||= REPOSITORY_CLASS.new

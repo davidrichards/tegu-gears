@@ -29,7 +29,7 @@ Feature: Analyst composes functions
     And a function to take the square root of a number
     When I compose these two functions
     Then I should get the correct result
-
+    
   Scenario: Many functions are joined
     Given a function to square a number
     And a function to take the square root of a number

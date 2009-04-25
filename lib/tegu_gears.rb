@@ -1,9 +1,14 @@
+require 'rubygems'
+gem 'activesupport'
+require 'activesupport'
+
 # Add to these if you want to add class and instance methods.
 module TeguGears
   module InstanceMethods; end
   module ClassMethods; end
 end
 
+$:.unshift(File.dirname(__FILE__))
 require 'tegu_gears/memoize'
 Dir.glob("#{File.dirname(__FILE__)}/tegu_gears/*.rb").each { |file| require file }
 module TeguGears

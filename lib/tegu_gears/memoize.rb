@@ -15,8 +15,8 @@ module TeguGears #:nodoc:
     end
 
     module InstanceMethods
-      def call(x)
-        function(x)
+      def call(*x)
+        function(*x)
       end
 
       def memoize
@@ -28,12 +28,12 @@ module TeguGears #:nodoc:
         @memoize = val
       end
 
-      def function(x)
-        self.memoize ? memoized(x) : process(x)
+      def function(*x)
+        self.memoize ? memoized(*x) : process(*x)
       end
 
-      def memoized(x)
-        MemoRepository.for(self, x) || MemoRepository.set(self, x, process(x))
+      def memoized(*x)
+        MemoRepository.for(self, x) || MemoRepository.set(self, x, process(*x))
       end
 
       def flush
