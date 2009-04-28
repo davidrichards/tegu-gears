@@ -19,8 +19,34 @@ module TeguGears
   end
 end
 
+# Now that I have some tools setup, require some libraries that will be
+# generally useful. This will be migrated to a configurable load process
+# at some point soon. 
+
+# Requires libraries, only if they're available.
+def safe_load(val=nil, &block)
+  begin
+    if block
+      block.call
+    else
+      require val
+    end
+  # Very important that this is Exception, and not StandardError
+  rescue Exception => e 
+    false
+  end
+end
+
+safe_load 'rubygems'
+safe_load 'mathn'
+safe_load {require bigdecimal; require 'bigdecimal/math'}
+safe_load 'set'
+safe_load 'matrix'
+safe_load 'narray'
+safe_load 'rnum'
+safe_load 'gratr'
+safe_load 'tenacious_g'
+safe_load 'rbtree'
 
 # Require the examples too, they are meant to be generally interesting or useful.
 Dir.glob("#{File.dirname(__FILE__)}/examples/*.rb").each { |file| require file }
-
-
