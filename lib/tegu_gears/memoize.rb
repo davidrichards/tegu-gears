@@ -8,7 +8,7 @@ module TeguGears #:nodoc:
       def instance
         @inst ||= new
       end
-
+      
       def method_missing(sym, *args, &block)
         instance.send(sym, *args, &block)
       end
@@ -20,13 +20,32 @@ module TeguGears #:nodoc:
       end
 
       def memoize
-        @memoize = true unless defined?(@memoize)
-        @memoize 
+        @memoize = defined?(@memoize) ? @memoize : true
       end
 
       def memoize=(val)
-        @memoize = val
+        @memoize = val ? true : false
       end
+
+      # Has a global effect.  Any instance will keep their settings, and can
+      # save their settings.  This is important for things that just shouldn't
+      # be memoized, and we don't need to tell each instance that we're
+      # playing the game differently:
+      # 
+      # class A
+      #   include TeguGears
+      #   nix_memos
+      # end
+      # def nix_memos
+      #   self.class.memoize_default = false
+      #   self.memoize = false
+      # end
+      # 
+      # # Works the same as nix_memos, only turns memoization on.
+      # def allow_memos
+      #   self.class.memoize_default = true
+      #   self.memoize = true
+      # end
 
       def function(*x)
         self.memoize ? memoized(*x) : process(*x)

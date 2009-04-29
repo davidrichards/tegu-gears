@@ -2,6 +2,16 @@ require 'rubygems'
 gem 'activesupport'
 require 'activesupport'
 
+# I need UUID for several reasons.
+gem 'uuid'
+require 'uuid'
+# Maybe adds a little performance if we call this often.
+class UUID
+  def self.instance
+    @@uuid_singleton ||= new
+  end
+end
+
 # Add to these if you want to add class and instance methods.
 module TeguGears
   module InstanceMethods; end

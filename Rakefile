@@ -4,11 +4,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |s|
     s.name = "tegu_gears"
-    s.summary = %Q{TODO}
+    s.summary = "Composed, memoized, concurrent, distributed code chuncks to be used for anything under the sun."
     s.email = "davidlamontrichards@gmail.com"
     s.homepage = "http://github.com/davidrichards/tegu_gears"
-    s.description = "TODO"
+    s.description = "Composed, memoized, concurrent, distributed code chuncks to be used for anything under the sun."
     s.authors = ["David Richards"]
+    s.add_dependency 'uuid'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

@@ -25,6 +25,59 @@ describe Memoize do
       @a.should_receive(:blah).and_return(true)
       A.blah
     end
+    
+    # The issue is dealing with modules instead of true class variables.  I'm
+    # affecting other classes with this. 
+    # 
+    # The solution is to create a configuration setup like with GritGateway on Object:
+    # class A
+    #   tegu_gears do |tg|
+    #     tg.nix_memos
+    #   end
+    # end
+    # 
+    # Make both approaches available (include TeguGears)
+    # 
+    # 
+    # 
+    # 
+    # 
+    # 
+    # 
+    # it "should be able to nix all memoization" do
+    #   A.should be_respond_to(:nix_memos)
+    #   A.nix_memos
+    #   A.memoize.should be_false
+    # end
+    # 
+    # it "should be able to allow memoization" do
+    #   A.should be_respond_to(:allow_memos)
+    #   A.allow_memos
+    #   A.memoize.should be_true
+    # end
+    # 
+    # context "manage memoize" do
+    #   before(:all) do
+    #     class B
+    #       include Memoize
+    #       nix_memos
+    #     end
+    #   end
+    #   
+    #   after(:all) do
+    #     Object.send(:remove_const, :B)
+    #   end
+    #   
+    #   it "should default to the class setting" do
+    #     b = B.new
+    #     require 'rubygems'
+    #     require 'ruby-debug'
+    #     debugger
+    #     b.memoize.should be_false
+    #     B.memoize.should be_false
+    #   end
+    #   
+    # end
   end
   
   context "instance methods" do
