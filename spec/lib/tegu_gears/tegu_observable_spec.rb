@@ -1,10 +1,10 @@
 require File.join(File.dirname(__FILE__), "/../../spec_helper")
 
-describe Observable do
+describe TeguObservable do
   
   before(:all) do
     class A
-      include Observable
+      include TeguObservable
       def value; 1 end
     end
   end

@@ -4,7 +4,7 @@ module TeguGears #:nodoc:
   # machines, I'm implementing my own Observer pattern.  It looks basic
   # today, but will be updated as I add concurrency and distributed
   # processing to TeguGears. 
-  module Observable
+  module TeguObservable
     def observers
       @observers ||= {}
     end
@@ -28,14 +28,14 @@ module TeguGears #:nodoc:
       observers.delete(observer)
     end
     
-    def notify_observers
+    def notify_observers(val=self)
       observers.each do |key, observer|
-        notify_observer(observer)
+        notify_observer(observer, val)
       end
     end
 
-    def notify_observer(observer)
-      observer.is_a?(Proc) ? observer.call(self) : observer.update(self)
+    def notify_observer(observer, val=self)
+      observer.is_a?(Proc) ? observer.call(val) : observer.update(val)
     end
     
     def uuid_regex

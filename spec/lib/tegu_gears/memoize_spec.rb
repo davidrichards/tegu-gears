@@ -9,6 +9,7 @@ describe Memoize do
         x**2
       end
     end
+    A.instance.stub!(:notify_observers).and_return(true)
   end
   
   context "class methods" do
@@ -84,6 +85,7 @@ describe Memoize do
     
     before(:each) do
       @a = A.new
+      def @a.notify_observers(arg); arg end
     end
     
     it "should map call to function" do

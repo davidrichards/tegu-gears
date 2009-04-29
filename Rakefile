@@ -10,6 +10,7 @@ begin
     s.description = "Composed, memoized, concurrent, distributed code chuncks to be used for anything under the sun."
     s.authors = ["David Richards"]
     s.add_dependency 'uuid'
+    s.add_dependency 'god'
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

@@ -1,0 +1,44 @@
+Some things:
+
+* TeguObservable
+** Use the messaging service to keep track of things in different threads, processes, and machines
+* Distribution
+** Figure out Nanite
+** Implement the basic Nanite
+** Hook all the chunks up to this messaging system
+** Create a God config to start any/all distribution-related services
+* Services
+** Get a config file working
+** Choose between the gem config and a local one and one in ~/.tegu/tegu_gears
+* Confirm ThreadPool from process on
+* Make the running threads accessible through observable too
+* Finish/fix nix_memos and accept_memos
+* Come up with a simple memo repository that is:
+** thread safe
+** FIFO
+** limitable by size, with a reasonable default size
+** With a Hash interface
+** possibly using Memcached
+* Make SimpleMemoCache the default
+* Add this cache to the God configuration
+* Add some real configuration to bringing TeguGears into a class, so:
+
+class A
+  use_tegu_gears do |tg|
+    tg.nix_memos
+    tg.cache_memos_with RLMemoCache
+    tg.has_direct_side_effects
+    tg.daemonize_with :config_file_name
+    tg.signature {:hash => :notation}
+  end
+end
+
+class B < X
+  use_tegu_gears do |tg|
+    tg.signature {:hash => :notation}
+    tg.processor :method_name
+  end
+end
+    
+    
+* Write up a bunch of Blog articles on this stuff

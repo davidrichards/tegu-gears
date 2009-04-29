@@ -48,7 +48,9 @@ module TeguGears #:nodoc:
       # end
 
       def function(*x)
-        self.memoize ? memoized(*x) : process(*x)
+        val = (self.memoize ? memoized(*x) : process(*x))
+        self.notify_observers(val)
+        val
       end
 
       def memoized(*x)

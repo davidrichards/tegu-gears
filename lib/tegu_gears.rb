@@ -26,6 +26,7 @@ module TeguGears
     base.send(:include, Memoize)
     base.send(:include, InstanceMethods)
     base.send(:extend, ClassMethods)
+    base.send(:include, TeguObservable)
   end
 end
 
