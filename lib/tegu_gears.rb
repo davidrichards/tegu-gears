@@ -1,6 +1,7 @@
 require 'rubygems'
 gem 'activesupport'
 require 'activesupport'
+require 'amqp'
 
 # I need UUID for several reasons.
 gem 'uuid'

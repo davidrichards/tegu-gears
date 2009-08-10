@@ -14,4 +14,8 @@ describe "TeguGears" do
     A.included_modules.should be_include(TeguGears::Memoize)
     Object.send(:remove_const, :A)
   end
+  
+  it "should use AMQP" do
+    defined?(AMQP).should eql('constant')
+  end
 end
